@@ -2,21 +2,21 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.util.Random;
-
 import static java.lang.Math.abs;
 
 public class ButtonJPanel extends JPanel implements ActionListener {
     static String planetaString = "Planeta";
     static String estrellaString = "Estrella";
+    static String saveImageString = "Save";
     static String addString = "Add";
     JRadioButton planetaButton = new JRadioButton(planetaString);
     JRadioButton estrellaButton = new JRadioButton(estrellaString);
+    JButton saveImageButton = new JButton(saveImageString);
     JButton addButton = new JButton(addString);
     ButtonGroup group = new ButtonGroup();
-    JPanel radioPanel = new JPanel(new GridLayout(0, 1));
-
+    JPanel radioPanel = new JPanel(new GridLayout(2, 2));
+    JPanel buttonsPanel = new JPanel(new GridLayout(2, 0));
     // Panel size
     final private int height = 480;
     final private int width = 600;
@@ -28,6 +28,7 @@ public class ButtonJPanel extends JPanel implements ActionListener {
     private MainJPanel getMainJPanel(){
         return mainJPanel;
     }
+
     public ButtonJPanel(MainJPanel mainJPanel){
         super(new BorderLayout());
         setMainJPanel(mainJPanel);
@@ -40,37 +41,51 @@ public class ButtonJPanel extends JPanel implements ActionListener {
         group.add(planetaButton);
         group.add(estrellaButton);
 
+        //Put the radio buttons in a column in a panel.
+        radioPanel.add(planetaButton);
+        radioPanel.add(estrellaButton);
+
         //Create simple button
         addButton.setActionCommand(addString);
+
+        //Create button save
+        saveImageButton.setActionCommand(saveImageString);
+
+        //Add buttons to JPanel for buttons
+        buttonsPanel.add(addButton);
+        buttonsPanel.add(saveImageButton);
 
         //Register a listener for the radio buttons.
         planetaButton.addActionListener(this);
         estrellaButton.addActionListener(this);
         addButton.addActionListener(this);
+        saveImageButton.addActionListener(this);
 
-        //Put the radio buttons in a column in a panel.
-        radioPanel.add(planetaButton);
-        radioPanel.add(estrellaButton);
 
-        add(radioPanel, BorderLayout.LINE_START);
-        add(addButton,BorderLayout.LINE_END);
+        add(radioPanel, BorderLayout.WEST);
+        add(buttonsPanel,BorderLayout.EAST);
+
         setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getActionCommand() == "Add"){
+        MainJPanel mainJPanel = getMainJPanel();
+        if(e.getActionCommand() == addString){
             System.out.println("Add");
-            MainJPanel mainJPanelR = getMainJPanel();
+
             Random random = new Random();
             if(planetaButton.isSelected()){
                 System.out.println("Planeta");
                 // Generar un planeta en el "canvas"
-                mainJPanelR.drawPoint(mainJPanelR.getGraphics(), new Point(abs(random.nextInt()) % width,abs(random.nextInt()) % height),"planet");
+               mainJPanel.drawPoint(new Point(abs(random.nextInt()) % width,abs(random.nextInt()) % height),"planet", mainJPanel);
             }else if(estrellaButton.isSelected()){
                 System.out.println("Estrella");
                 // Generar una estrella en el "canvas"
-                mainJPanelR.drawPoint(mainJPanelR.getGraphics(), new Point(abs(random.nextInt()) % width, abs(random.nextInt()) % height),"star");
+                mainJPanel.drawPoint(new Point(abs(random.nextInt()) % width, abs(random.nextInt()) % height),"star", mainJPanel);
             }
+        }else if(e.getActionCommand() == saveImageString){
+            mainJPanel.saveImage(mainJPanel);
         }
     }
 }
