@@ -77,15 +77,17 @@ public class ButtonJPanel extends JPanel implements ActionListener {
             Random random = new Random();
             if(planetaButton.isSelected()){
                 System.out.println("Planeta");
+                mainJPanel.setData(new Point(abs(random.nextInt()) % width,abs(random.nextInt()) % height),"planet");
                 // Generar un planeta en el "canvas"
-               mainJPanel.drawPoint(new Point(abs(random.nextInt()) % width,abs(random.nextInt()) % height),"planet", mainJPanel);
+                mainJPanel.paintComponent(mainJPanel.getGraphics());
             }else if(estrellaButton.isSelected()){
                 System.out.println("Estrella");
+                mainJPanel.setData(new Point(abs(random.nextInt()) % width,abs(random.nextInt()) % height),"star");
                 // Generar una estrella en el "canvas"
-                mainJPanel.drawPoint(new Point(abs(random.nextInt()) % width, abs(random.nextInt()) % height),"star", mainJPanel);
+                mainJPanel.paintComponent(mainJPanel.getGraphics());
             }
         }else if(e.getActionCommand() == saveImageString){
-            mainJPanel.saveImage(mainJPanel);
+            mainJPanel.saveImage();
         }
     }
 }
