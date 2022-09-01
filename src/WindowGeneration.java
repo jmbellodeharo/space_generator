@@ -2,11 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 
 public class WindowGeneration extends JFrame {
-    MainJPanel mainJPanel = new MainJPanel();
-    ButtonJPanel buttonJPanel = new ButtonJPanel(mainJPanel);
 
-    public WindowGeneration(){
+
+    public WindowGeneration(int height, int width){
         super("SpaceObject Generator");
+        MainJPanel mainJPanel = new MainJPanel(height, width);
+        ButtonJPanel buttonJPanel = new ButtonJPanel(mainJPanel, height, width);
         // Create a container to add the JPanel
         Container contentPane = getContentPane();
         contentPane.add(buttonJPanel,BorderLayout.SOUTH);

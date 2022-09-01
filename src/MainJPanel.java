@@ -11,8 +11,8 @@ import java.util.Random;
 import static java.lang.Math.abs;
 
 public class MainJPanel extends JPanel {
-    final private int width = 600;
-    final private int height = 480;
+    private int width;
+    private int height;
     final private int maxPlanetSize = 7;
     final private int minPlanetSize = 4;
     final private int maxStarSize = 3;
@@ -20,10 +20,15 @@ public class MainJPanel extends JPanel {
     Point start;
     String type;
     ArrayList<SpaceObject> spaceObjects = new ArrayList();
-    private BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+    private BufferedImage bufferedImage;
 
-    public MainJPanel(){
+    public MainJPanel(int height, int width){
+
         setBackground(new Color(0,0,0));
+        this.height = height;
+        this.width = width;
+        bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
     }
 
     public Dimension getPreferredSize(){
@@ -81,7 +86,10 @@ public class MainJPanel extends JPanel {
      */
     public void saveImage() {
         try{
-            ImageIO.write(bufferedImage, "png", new File("save" + getContador() + ".png"));
+            String imageName = "save" + getContador() + ".png";
+            ImageIO.write(bufferedImage, "png", new File(imageName));
+            String currentDir = System.getProperty("user.dir");
+            System.out.println("Image " + imageName + " saved at " + currentDir);
         }catch (Exception e){
             System.out.println("ERROR");
             e.printStackTrace();

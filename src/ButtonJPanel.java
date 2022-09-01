@@ -6,8 +6,8 @@ import java.util.Random;
 import static java.lang.Math.abs;
 
 public class ButtonJPanel extends JPanel implements ActionListener {
-    static String planetaString = "Planeta";
-    static String estrellaString = "Estrella";
+    static String planetaString = "Planet";
+    static String estrellaString = "Star";
     static String saveImageString = "Save";
     static String addString = "Add";
     JRadioButton planetaButton = new JRadioButton(planetaString);
@@ -18,8 +18,8 @@ public class ButtonJPanel extends JPanel implements ActionListener {
     JPanel radioPanel = new JPanel(new GridLayout(2, 2));
     JPanel buttonsPanel = new JPanel(new GridLayout(2, 0));
     // Panel size
-    final private int height = 480;
-    final private int width = 600;
+    private int height;
+    private int width;
     private MainJPanel mainJPanel;
 
     private void setMainJPanel(MainJPanel mainJPanelR){
@@ -29,8 +29,10 @@ public class ButtonJPanel extends JPanel implements ActionListener {
         return mainJPanel;
     }
 
-    public ButtonJPanel(MainJPanel mainJPanel){
+    public ButtonJPanel(MainJPanel mainJPanel, int height, int width){
         super(new BorderLayout());
+        this.height = height;
+        this.width = width;
         setMainJPanel(mainJPanel);
         //Create the radio buttons.
         planetaButton.setActionCommand(planetaString);
@@ -86,6 +88,8 @@ public class ButtonJPanel extends JPanel implements ActionListener {
                 // Generar una estrella en el "canvas"
                 mainJPanel.paintComponent(mainJPanel.getGraphics());
             }
+            //Print star and planet number
+
         }else if(e.getActionCommand() == saveImageString){
             mainJPanel.saveImage();
         }
